@@ -16,6 +16,11 @@ int inBounds(const GameState *game, Position p) {
            p.col >= 0 && p.col < game->cols;
 }
 
+/*判断某一位置是否为墙体*/
+int isWall(const GameState* game, Position p) {
+    return game->terrain[p.row][p.col] == TILE_WALL;
+}
+
 int findBox(const GameState *game, Position p) {
     int i;
     for (i = 0; i < game->boxCount; ++i) {
@@ -77,8 +82,57 @@ void updateGame(GameState *game, char command) {
     /* TODO 2：检查地图边界和墙壁。 */
     /* TODO 3：若前方有箱子，检查箱子后方的位置是否允许推动。 */
     /* TODO 4：若操作合法，更新箱子、玩家的位置和步数。 */
-    (void)game;
-    (void)command;
+    Position p = game->player;
+    switch (command) {
+        case 'w': {
+            p.row -= 1;
+            break;
+        }
+        case 's': {
+            p.row += 1;
+            break;
+        }
+        case 'a': {
+            p.col -= 1;
+            break;
+        }
+        case 'd': {
+            p.col += 1;
+            break;
+        }
+    }
+    if ((!inBounds(game, p)) || isWall(game, p)) {
+        return;
+    }
+    if (int t = findBox(game, p);t > -1) {
+        Position pbox = p;
+        switch (command) {
+            case 'w': {
+                pbox.row -= 1;
+                break;
+            }
+            case 's': {
+                pbox.row += 1;
+                break;
+            }
+            case 'a': {
+                pbox.col -= 1;
+                break;
+            }
+            case 'd': {
+                pbox.col += 1;
+                break;
+            }
+        }
+        if ((!inBounds(game, pbox)) || isWall(game, pbox)) {
+            return;
+        }
+        else {
+            game->boxes[t] = pbox;
+        }
+    }
+    game->player = p;
+    game->steps ++;
 }
 
 int checkWin(const GameState *game) {
