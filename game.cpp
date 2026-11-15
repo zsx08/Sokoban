@@ -137,6 +137,10 @@ void updateGame(GameState *game, char command) {
 
 int checkWin(const GameState *game) {
     /* TODO：仅当所有箱子都在目标点上时返回 1，否则返回 0。 */
-    (void)game;
-    return 0;
+    int goal = 1;
+    for (int i = 0;i < game->boxCount && goal > 0;i++) {
+        Position pbox = game->boxes[i];
+        goal *= (game->terrain[pbox.row][pbox.col] == TILE_GOAL);
+    }
+    return goal;
 }
