@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "[程序设计基础]调试 Sokoban 项目",
+            "program": "${workspaceFolder}/sokoban",
+            "cwd": "${workspaceFolder}",
+            "terminal": "integrated",
+            "preLaunchTask": "[程序设计基础]build Sokoban",
+            "initCommands": [
+                "settings set target.process.thread.step-avoid-regexp \"\""
+            ]
+        }
+    ],
+    "compounds": []
+}
