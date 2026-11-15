@@ -39,6 +39,7 @@ int initGame(GameState *game) {
     game->cols = (int)strlen(DEFAULT_LEVEL[0]);
     if (game->cols == 0 || game->cols > MAX_COLS) return 0;
 
+    //将关卡字符串加载为gamestate
     for (r = 0; r < game->rows; ++r) {
         /* 关卡的每一行应有相同的字符数量。 */
         if ((int)strlen(DEFAULT_LEVEL[r]) != game->cols) return 0;
