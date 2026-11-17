@@ -1,9 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#define MAX_ROWS 20
-#define MAX_COLS 40
-#define MAX_BOXES 20
+#include "levels.h"
+
 
 typedef enum {
     TILE_FLOOR,
@@ -32,8 +31,8 @@ typedef struct {
 } GameState;
 
 
-/* 从源码中的内置关卡初始化，返回 1 表示成功，0 表示关卡数据不合法。 */
-int initGame(GameState *game);
+/* 从源码中的内置关卡初始化，返回 1 表示成功，0 表示关卡数据不合法。id为关卡序号 */
+int initGame(GameState *game, int id = 0);
 
 /* Windows/macOS 终端单键输入，无需回车；返回小写指令，非法按键返回 '\0'。 */
 char readCommand(void);

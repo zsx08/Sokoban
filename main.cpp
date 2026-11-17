@@ -6,6 +6,8 @@ int main(void) {
     char command;
     const char *message = "";
 
+    int levelnum=ReadMapData();//读取地图数据
+
     if (!initGame(&game)) {
         printf("Failed to initialize the built-in level.\n");
         return 1;

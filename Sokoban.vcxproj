@@ -130,15 +130,20 @@
     <ClCompile Include="console_color.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="levels.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="render.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="console_color.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="levels.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="level.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

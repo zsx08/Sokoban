@@ -31,26 +31,39 @@ int findBox(const GameState *game, Position p) {
     return -1;
 }
 
-int initGame(GameState *game) {
+int initGame(GameState *game,int id) {
     int r, c;
     int playerCount = 0;
     int goalCount = 0;
 
     memset(game, 0, sizeof(*game));
     game->running = 1;
+
+    //加载地图
+    char map[MAX_ROWS][MAX_COLS + 1];
+    memcpy(map,levels[id].map,sizeof(levels[id].map));
+
+    /*      旧版，已废弃
     //计算行数列数
-    game->rows = (int)(sizeof(DEFAULT_LEVEL) / sizeof(DEFAULT_LEVEL[0]));
+    game->rows = (int)(sizeof(map) / sizeof(map[0]));
     if (game->rows <= 0 || game->rows > MAX_ROWS) return 0;
-    game->cols = (int)strlen(DEFAULT_LEVEL[0]);
+    game->cols = (int)strlen(map[0]);
+    if (game->cols == 0 || game->cols > MAX_COLS) return 0;
+    */
+
+    //计算行数列数
+    game->rows = levels[id].row;
+    if (game->rows <= 0 || game->rows > MAX_ROWS) return 0;
+    game->cols = levels[id].col;
     if (game->cols == 0 || game->cols > MAX_COLS) return 0;
 
     //将关卡字符串加载为gamestate
     for (r = 0; r < game->rows; ++r) {
         /* 关卡的每一行应有相同的字符数量。 */
-        if ((int)strlen(DEFAULT_LEVEL[r]) != game->cols) return 0;
+        if ((int)strlen(map[r]) != game->cols) return 0;
 
         for (c = 0; c < game->cols; ++c) {
-            char ch = DEFAULT_LEVEL[r][c];
+            char ch = map[r][c];
             game->terrain[r][c] = TILE_FLOOR;
             if (ch == '#') game->terrain[r][c] = TILE_WALL;
             else if (ch == '.' || ch == '*' || ch == '+') {
