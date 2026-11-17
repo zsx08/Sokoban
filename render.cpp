@@ -2,6 +2,12 @@
 #include "console_color.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
+#include <iostream>
+#include "data.h"
+#include "scene.h"
+
+const std::string modelist[] = { "Level" };//模式名
 
 /*对于Windows系统和非Windows系统各用来清屏*/
 static void clearScreen(void) {
@@ -82,5 +88,42 @@ void renderGame(const GameState *game, const char *message) {
         printf("W/A/S/D: move  R: restart  Q: quit (no Enter)");
     }
     /* 先显示完整画面，再等待下一次按键。 */
+    fflush(stdout);
+}
+
+
+void renderTitleScene(int selection) {
+    fflush(stdout);
+    clearScreen();
+    resetTextColor();
+
+    printf("=== Sokoban Title ===\n");
+    printf("====== Welcome! =====\n");
+    printf("=== Mode Selection ==\n");
+    for (int i = 0;i < sizeof(scenelist) / sizeof(Scene);i++) {
+        std::cout<<modelist[i]<<"\t";
+    }
+    printf("\n");
+    for (int i = 0;i < sizeof(scenelist) / sizeof(Scene);i++) {
+        std::cout << (i==selection?"^\t" :"\t") << "\t";
+    }
+    printf("Press <- or -> to change mode\nPress Space to enter game\nPress Esc to quit\n");
+    fflush(stdout);
+}
+
+void renderLevelSelectionScene(int selection) {
+    fflush(stdout);
+    clearScreen();
+    resetTextColor();
+
+    printf("=== Sokoban Selection ===\n");
+    for (int i = 0;i < levelamount;i++) {
+        printf("%d\t", i);
+    }
+    printf("\n");
+    for (int i = 0;i < levelamount;i++) {
+        printf(i == selection ? "^\t" : "\t");
+    }
+    printf("Press <- or -> to change level\nPress Space to enter game\nPress Esc to quit\n");
     fflush(stdout);
 }

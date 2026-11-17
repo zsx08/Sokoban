@@ -3,7 +3,6 @@
 
 #include "levels.h"
 
-
 typedef enum {
     TILE_FLOOR,
     TILE_WALL,
@@ -35,7 +34,7 @@ typedef struct {
 int initGame(GameState *game, int id = 0);
 
 /* Windows/macOS 终端单键输入，无需回车；返回小写指令，非法按键返回 '\0'。 */
-char readCommand(void);
+int readCommand(void);
 
 /* 清屏后重画地图和右侧图例；message 是界面提示，不属于游戏状态。 */
 void renderGame(const GameState *game, const char *message);
@@ -53,4 +52,9 @@ void updateGame(GameState *game, char command);
 /* 只读取状态，不修改状态；加载或重开关卡后也会立即调用。 */
 int checkWin(const GameState *game);
 
+/*渲染初始界面*/
+void renderTitleScene(int selection);
+
+/*渲染关卡选择界面*/
+void renderLevelSelectionScene(int selection);
 #endif

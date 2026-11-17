@@ -7,9 +7,7 @@
 static int readKey(void) {
     int ch = _getch();
     if (ch == 0 || ch == 0xE0) {
-        /* 方向键和功能键还有第二个键码，需要一并读取并丢弃。 */
-        (void)_getch();
-        return 0;
+        return 256+_getch();
     }
     return ch;
 }
@@ -134,13 +132,14 @@ static int readKey(void) {
 }
 #endif
 //读取输入
-char readCommand(void) {
+int readCommand(void) {
     int ch = readKey();
     if (ch == EOF) return 'q';
     if (ch >= 'A' && ch <= 'Z') ch = ch - 'A' + 'a';
     if (ch == 'w' || ch == 'a' || ch == 's' || ch == 'd' ||
-        ch == 'r' || ch == 'q') {
-        return (char)ch;
+        ch == 'r' || ch == 'q' || ch == ' ' || ch == 27  ||
+        ch == 'n' || ch == 331 || ch == 333) {
+        return ch;
     }
     return '\0';
 }
