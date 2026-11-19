@@ -2,7 +2,7 @@
 #define MAX_ROWS 20
 #define MAX_COLS 40
 #define MAX_BOXES 20
-#define MAX_LEVELS 20
+#define MAX_LEVELS 40
 
 typedef struct {
 	char map[MAX_ROWS][MAX_COLS + 1];

@@ -7,7 +7,6 @@ Scene SinglePlayer(GameState& game) {
     int command = 0;
     const char* message = "";
     command = readCommand();    //读指令
-    message = "";
 
     if (command == 'q') {
         return SceneLevel;
@@ -40,17 +39,25 @@ Scene SinglePlayer(GameState& game) {
 
 Scene LocalHumanPlayer(GameState& game,int id) {
 	int command = 0;
+    const char* message = "";
+
 	command = readCommand();
 	switch (command) {
 	case 'w':
 	case 'a':
 	case 's':
 	case 'd':
-		updateGame(&game, command,id);
+        updateGame(&game, command, id);
+        if (checkWin(&game)) {
+            renderGame(&game, message);
+            return SceneEnd;
+        }
         break;
     case 'q':
         return Quit; //待定
-	}
+    default:
+        message = "Invalid command.";
+    }
     renderGame(&game, "");
     return Maintain;
 }
