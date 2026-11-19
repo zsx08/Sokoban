@@ -66,9 +66,11 @@ void renderGame(const GameState *game, const char *message) {
                     symbol = isGoal ? '*' : '$';
                     color = isGoal ? COLOR_GREEN : COLOR_YELLOW;
                 }
-                if (game->player.row == r && game->player.col == c) {
-                    symbol = isGoal ? '+' : '@';
-                    color = isGoal ? COLOR_GREEN : COLOR_CYAN;
+                for (int i = 0;i < game->playernum;i++) {
+                    if (game->player[i].row == r && game->player[i].col == c) {
+                        symbol = isGoal ? '+' : '@';
+                        color = isGoal ? COLOR_GREEN : COLOR_CYAN;
+                    }
                 }
                 printColoredChar(symbol, color);
             }
@@ -79,7 +81,9 @@ void renderGame(const GameState *game, const char *message) {
         printLegend(r);
         putchar('\n');
     }
-    printf("Steps: %d\n", game->steps);
+    for (int i = 0;i < game->playernum;i++) {
+        printf("Steps: %d\n", game->steps[i]);
+    }
     if (message != NULL && message[0] != '\0') printf("%s", message);
     else if (game->won) printf("You win! R to restart, Q to quit.");
     putchar('\n');

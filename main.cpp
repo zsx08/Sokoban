@@ -24,6 +24,9 @@ int main(void) {
         case SceneEnd:
             currentscene = RunEnd();
             break;
+        case SceneMutiple:
+            currentscene = RunMutiple();
+            break;
         case Quit:
             printf("Goodbye!");
             return 0;

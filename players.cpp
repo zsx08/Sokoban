@@ -38,7 +38,7 @@ Scene SinglePlayer(GameState& game) {
     return Maintain;
 }
 
-void LocalHumanPlayer(GameState& game,int id) {
+Scene LocalHumanPlayer(GameState& game,int id) {
 	int command = 0;
 	command = readCommand();
 	switch (command) {
@@ -46,9 +46,11 @@ void LocalHumanPlayer(GameState& game,int id) {
 	case 'a':
 	case 's':
 	case 'd':
-		updateGame(&game, command);//需要修改
-		break;
+		updateGame(&game, command,id);
+        break;
     case 'q':
-        break; //待定
+        return Quit; //待定
 	}
+    renderGame(&game, "");
+    return Maintain;
 }

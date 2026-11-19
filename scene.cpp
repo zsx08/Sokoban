@@ -16,7 +16,15 @@ Scene RunTitle() {
 				return scenelist[mode];
 			case 27:
 				return Quit;
-		}
+            case 331:
+                if (mode > 0)
+                    mode--;
+                break;
+            case 333:
+                if (mode < sizeof(scenelist) / sizeof(Scene))
+                    mode++;
+                break;
+        }
 	}
 }
 
@@ -82,9 +90,19 @@ Scene RunLevel() {
 //此处只运行循环，逻辑实现分离到mutipleplayer.h中的接口里
 Scene RunMutiple() {
     int playerid = 0;
+    Scene gamestate;
     GameState g;
+    if (!initGame(&g, 18 ,2)) {
+        printf("Failed to initialize the built-in level.\n");
+        return SceneTitle;
+    }
+    g.won = checkWin(&g);
+    renderGame(&g, "");
     while (1) {
-        LocalHumanPlayer(g,playerid);
+        gamestate = LocalHumanPlayer(g,playerid);
+        if (gamestate != Maintain) {
+            return gamestate;
+        }
         playerid = (playerid + 1) % 2;
     }
 }
