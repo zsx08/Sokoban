@@ -1,0 +1,54 @@
+#include "players.h"
+#include "game.h"
+#include "scene.h"
+#include "data.h"
+#include <stdio.h>
+Scene SinglePlayer(GameState& game) {
+    int command = 0;
+    const char* message = "";
+    command = readCommand();    //读指令
+    message = "";
+
+    if (command == 'q') {
+        return SceneLevel;
+    }
+    else if (command == 'r') {
+        if (!initGame(&game, levelid)) {
+            renderGame(&game, "Failed to restart. Check level data in level.txt.");
+            putchar('\n');
+            return SceneTitle;
+        }
+        message = "Level restarted.";
+        if (checkWin(&game)) {
+            return SceneEnd;
+        }
+    }
+    else if (command == 'w' || command == 'a' ||
+        command == 's' || command == 'd') {
+        updateGame(&game, command);
+        if (checkWin(&game)) {
+            renderGame(&game, message);
+            return SceneEnd;
+        }
+    }
+    else {
+        message = "Invalid command.";
+    }
+    renderGame(&game, message);
+    return Maintain;
+}
+
+void LocalHumanPlayer(GameState& game,int id) {
+	int command = 0;
+	command = readCommand();
+	switch (command) {
+	case 'w':
+	case 'a':
+	case 's':
+	case 'd':
+		updateGame(&game, command);//需要修改
+		break;
+    case 'q':
+        break; //待定
+	}
+}

@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include "data.h"
 #include "game.h"
+#include "players.h"
 
 /*ESC退出，Space进入模式*/
 Scene RunTitle() {
-	int command;
+	int command = 0;
 	int mode = 0;//表征是哪个模式
 	while (1) {
 		renderTitleScene(mode);
@@ -21,51 +22,24 @@ Scene RunTitle() {
 
 Scene RunGame() {
     GameState game;
-    int command;
-    const char* message = "";
-
+    Scene gamestate;
     if (!initGame(&game,levelid)) {
         printf("Failed to initialize the built-in level.\n");
         return SceneTitle;
     }
     game.won = checkWin(&game);
-
+    renderGame(&game, "");
     while (1) {
-        renderGame(&game, message);
-        command = readCommand();    //读指令
-        message = "";
-
-        if (command == 'q') {
-            return SceneLevel;
-        }
-        else if (command == 'r') {
-            if (!initGame(&game,levelid)) {
-                renderGame(&game, "Failed to restart. Check level data in level.txt.");
-                putchar('\n');
-                return SceneTitle;
-            }
-            message = "Level restarted.";
-            if (checkWin(&game)) {
-                return SceneEnd;
-            }
-        }
-        else if (command == 'w' || command == 'a' ||
-            command == 's' || command == 'd') {
-            updateGame(&game, command);  
-            if (checkWin(&game)) {
-                renderGame(&game, message);
-                return SceneEnd;
-            }
-        }
-        else {
-            message = "Invalid command.";
+        gamestate = SinglePlayer(game);
+        if (gamestate != Maintain) {
+            return gamestate;
         }
     }
 }
 
 /*ESC回退至Level，R重玩，Q下一关*/
 Scene RunEnd() {
-    int command;
+    int command = 0;
     printf(levelid< levelamount -1?"You win! R to restart, ESC to quit ,N to next level": "You win the last level! R to restart, ESC to quit\n");
     while (1) {
         command = readCommand();
@@ -85,7 +59,7 @@ Scene RunEnd() {
 }
 /*ESC返回标题，Space进关卡，左右方向键选关*/
 Scene RunLevel() {
-    int command;
+    int command = 0;
     while (1) {
         renderLevelSelectionScene(levelid);
         command = readCommand();
@@ -103,5 +77,14 @@ Scene RunLevel() {
                 levelid++;
             break;
         }
+    }
+}
+//此处只运行循环，逻辑实现分离到mutipleplayer.h中的接口里
+Scene RunMutiple() {
+    int playerid = 0;
+    GameState g;
+    while (1) {
+        LocalHumanPlayer(g,playerid);
+        playerid = (playerid + 1) % 2;
     }
 }

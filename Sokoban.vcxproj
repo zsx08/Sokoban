@@ -133,6 +133,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="levels.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="players.cpp" />
     <ClCompile Include="render.cpp" />
     <ClCompile Include="scene.cpp" />
   </ItemGroup>
@@ -141,6 +142,7 @@
     <ClInclude Include="data.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="levels.h" />
+    <ClInclude Include="players.h" />
     <ClInclude Include="scene.h" />
   </ItemGroup>
   <ItemGroup>

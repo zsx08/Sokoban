@@ -5,14 +5,17 @@ typedef enum {
     SceneLevel,
     SceneGame,
     SceneEnd,
-    Quit
+    SceneMutiple,
+    Quit,
+    Maintain
 }Scene;
 
-inline const Scene scenelist[] = { SceneLevel }; //支持的模式列表
+inline const Scene scenelist[] = { SceneLevel,SceneMutiple }; //支持的模式列表
 
 Scene RunTitle();
 Scene RunLevel();
 Scene RunGame();
 Scene RunEnd();
+Scene RunMutiple();
 
 

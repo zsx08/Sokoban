@@ -7,7 +7,7 @@
 #include "data.h"
 #include "scene.h"
 
-const std::string modelist[] = { "Level" };//模式名
+const std::string modelist[] = { "Level","MutiplePlayer"};//模式名
 
 /*对于Windows系统和非Windows系统各用来清屏*/
 static void clearScreen(void) {
