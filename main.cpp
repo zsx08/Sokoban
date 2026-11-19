@@ -6,7 +6,7 @@
 
 int main(void) {
     /*初始化*/
-    levelamount = ReadMapData();//读取地图数据
+    ReadMapData();//读取地图数据
     Scene currentscene = SceneTitle;
 
     /*主逻辑*/

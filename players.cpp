@@ -54,7 +54,7 @@ Scene LocalHumanPlayer(GameState& game,int id) {
         }
         break;
     case 'q':
-        return Quit; //待定
+        return SceneLevel; //待定
     default:
         message = "Invalid command.";
     }

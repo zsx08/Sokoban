@@ -10,7 +10,7 @@ typedef enum {
     Maintain
 }Scene;
 
-inline const Scene scenelist[] = { SceneLevel,SceneMutiple }; //支持的模式列表
+inline const Scene scenelist[] = { SceneGame,SceneMutiple }; //支持的游戏模式列表
 
 Scene RunTitle();
 Scene RunLevel();

@@ -121,13 +121,17 @@ void renderLevelSelectionScene(int selection) {
     resetTextColor();
 
     printf("=== Sokoban Selection ===\n");
-    for (int i = 0;i < levelamount;i++) {
-        printf("%d\t", i);
+    for (int j = 0;j < levelamount[gamemode]/5+1;j++) {
+        for (int i = 5 * j;i < 5 * j +5 && i < levelamount[gamemode];i++) {
+            printf("%d\t", i);
+        }
+        printf("\n");
+        for (int i = 5 * j;i < 5 * j +5 && i < levelamount[gamemode];i++) {
+            printf(i == selection ? "^\t" : "\t");
+        }
+        printf("\n");
     }
-    printf("\n");
-    for (int i = 0;i < levelamount;i++) {
-        printf(i == selection ? "^\t" : "\t");
-    }
+    
     printf("Press <- or -> to change level\nPress Space to enter game\nPress Esc to quit\n");
     fflush(stdout);
 }

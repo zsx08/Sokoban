@@ -7,22 +7,21 @@
 /*ESC退出，Space进入模式*/
 Scene RunTitle() {
 	int command = 0;
-	int mode = 0;//表征是哪个模式
 	while (1) {
-		renderTitleScene(mode);
+		renderTitleScene(gamemode);
 		command = readCommand();    //读指令
 		switch (command) {	//暂时只有一个页面，不用加入页面切换
 			case ' ': 
-				return scenelist[mode];
+				return SceneLevel;
 			case 27:
 				return Quit;
             case 331:
-                if (mode > 0)
-                    mode--;
+                if (gamemode > 0)
+                    gamemode--;
                 break;
             case 333:
-                if (mode < sizeof(scenelist) / sizeof(Scene))
-                    mode++;
+                if (gamemode < sizeof(scenelist) / sizeof(Scene))
+                    gamemode++;
                 break;
         }
 	}
@@ -48,18 +47,18 @@ Scene RunGame() {
 /*ESC回退至Level，R重玩，Q下一关*/
 Scene RunEnd() {
     int command = 0;
-    printf(levelid< levelamount -1?"You win! R to restart, ESC to quit ,N to next level": "You win the last level! R to restart, ESC to quit\n");
+    printf(levelid< levelamount[gamemode] - 1 ? "You win! R to restart, ESC to quit ,N to next level" : "You win the last level! R to restart, ESC to quit\n");
     while (1) {
         command = readCommand();
         switch (command) {
             case 27:
                 return SceneLevel;
             case 'r':
-                return SceneGame;
+                return scenelist[gamemode];
             case 'n':
-                if (levelid < levelamount - 1) {
+                if (levelid < levelamount[gamemode] - 1) {
                     levelid++;
-                    return SceneGame;
+                    return scenelist[gamemode];
                 }
                 break;
         }
@@ -75,13 +74,13 @@ Scene RunLevel() {
         case 27:
             return SceneTitle;
         case ' ':
-            return SceneGame;
+            return scenelist[gamemode];
         case 331:
             if(levelid > 0)
                 levelid--;
             break;
         case 333:
-            if (levelid < levelamount - 1)
+            if (levelid < levelamount[gamemode] - 1)
                 levelid++;
             break;
         }
@@ -92,7 +91,7 @@ Scene RunMutiple() {
     int playerid = 0;
     Scene gamestate;
     GameState g;
-    if (!initGame(&g, 18 ,2)) {
+    if (!initGame(&g, levelid,2)) {
         printf("Failed to initialize the built-in level.\n");
         return SceneTitle;
     }

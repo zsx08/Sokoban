@@ -1,6 +1,6 @@
 #include "game.h"
 #include <string.h>
-
+#include "data.h"
 /* 修改此数组可编辑示例关卡，修改后需要重新编译。 */
 static const char DEFAULT_LEVEL[][MAX_COLS + 1] = {
     "##########",
@@ -46,7 +46,7 @@ int initGame(GameState *game,int id,int playernum) {
     game->playernum = playernum;
     //加载地图
     char map[MAX_ROWS][MAX_COLS + 1];
-    memcpy(map,levels[id].map,sizeof(levels[id].map));
+    memcpy(map,levels[gamemode][id].map,sizeof(levels[gamemode][id].map));
 
     /*      旧版，已废弃
     //计算行数列数
@@ -57,9 +57,9 @@ int initGame(GameState *game,int id,int playernum) {
     */
 
     //计算行数列数
-    game->rows = levels[id].row;
+    game->rows = levels[gamemode][id].row;
     if (game->rows <= 0 || game->rows > MAX_ROWS) return 0;
-    game->cols = levels[id].col;
+    game->cols = levels[gamemode][id].col;
     if (game->cols == 0 || game->cols > MAX_COLS) return 0;
 
     //将关卡字符串加载为gamestate
